@@ -20,7 +20,7 @@ def icon(emoji: str):
 
 ################## Code from Arnaud ##################
 
-import streamlit as st
+# import streamlit as st
 from google.cloud import bigquery
 from google.oauth2.service_account import Credentials
 
@@ -40,7 +40,6 @@ big_query_connector = get_connector()
 get_data_frame_from_raw_sql(big_query_connector, "SELECT 'foo'")
 
 ################## Code from Arnaud ##################
-
 
 def monthly_downloads(start_date):
     df = get_data_frame_from_raw_sql(
