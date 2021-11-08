@@ -32,13 +32,13 @@ def get_connector():
     return connector
 
 @st.experimental_memo(ttl=24*60*60)
-def get_data_frame_from_raw_sql(_connector, query: str) -> pd.DataFrame:
+def get_data_frame_from_raw_sql(_connector) -> pd.DataFrame:
+# def get_data_frame_from_raw_sql(_connector, query: str) -> pd.DataFrame:
     return _connector.query(query).to_dataframe()
 
 big_query_connector = get_connector()
 #get_data_frame_from_raw_sql(big_query_connector, "SELECT 'foo'")
 get_data_frame_from_raw_sql(big_query_connector)
-
 
 ################## Code from Arnaud ##################
 
