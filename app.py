@@ -244,7 +244,7 @@ def main():
     st.altair_chart(plot_all_downloads(filtered_df), use_container_width=True)
 
 
-gui.icon("⬇️")
+# gui.icon("⬇️")
 st.title("Downloads")
 st.write(
     "Metrics on how often Streamlit is being downloaded from PyPI (Python's main "
