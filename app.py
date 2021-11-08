@@ -6,7 +6,31 @@ import altair as alt
 from datetime import datetime, timedelta, date
 
 from data_sources import big_query
-from dashboard_utils import gui
+# from dashboard_utils import gui
+import gui
+
+################## Code from Arnaud ##################
+
+import streamlit as st
+from google.cloud import bigquery
+from google.oauth2.service_account import Credentials
+
+# Share the connector across all users connected to the app
+@st.experimental_singleton()
+def get_connector():
+    """ Create a connector using credentials filled in Streamlit secrets """
+    credentials = Credentials.from_service_account_info(st.secrets["bigquery"])
+    connector = bigquery.Client(credentials=credentials)
+    return connector
+
+@st.experimental_memo(ttl=24*60*60)
+def get_data_frame_from_raw_sql(_connector, query: str) -> pd.DataFrame:
+    return _connector.query(query).to_dataframe()
+
+big_query_connector = get_connector()
+get_data_frame_from_raw_sql(big_query_connector, "SELECT 'foo'")
+
+################## Code from Arnaud ##################
 
 
 def monthly_downloads(start_date):
