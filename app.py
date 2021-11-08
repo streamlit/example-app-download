@@ -5,7 +5,7 @@ import pandas as pd
 import altair as alt
 from datetime import datetime, timedelta, date
 
-from data_sources import big_query
+# from data_sources import big_query
 # from dashboard_utils import gui
 import gui
 
