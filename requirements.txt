@@ -1,0 +1,5 @@
+streamlit
+google-auth
+google-cloud-storage
+pandas
+datetime
