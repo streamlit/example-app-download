@@ -20,6 +20,7 @@ def icon(emoji: str):
 
 ################## Code from Arnaud ##################
 
+import streamlit as st
 from google.cloud import bigquery
 from google.oauth2.service_account import Credentials
 
@@ -32,18 +33,17 @@ def get_connector():
     return connector
 
 @st.experimental_memo(ttl=24*60*60)
-def get_data_frame_from_raw_sql(_connector) -> pd.DataFrame:
-# def get_data_frame_from_raw_sql(_connector, query: str) -> pd.DataFrame:
+def get_data_frame_from_raw_sql(_connector, query: str) -> pd.DataFrame:
     return _connector.query(query).to_dataframe()
 
 big_query_connector = get_connector()
-# get_data_frame_from_raw_sql(big_query_connector, "SELECT 'foo'")
-get_data_frame_from_raw_sql(big_query_connector)
+get_data_frame_from_raw_sql(big_query_connector, "SELECT 'foo'")
 
 ################## Code from Arnaud ##################
 
+
 def monthly_downloads(start_date):
-    df = get_data_frame_from_raw_sql(
+    df = big_query.get_data_frame_from_raw_sql(
         f"""
         SELECT
             date_trunc(date, MONTH) as date,
@@ -64,7 +64,7 @@ def monthly_downloads(start_date):
 
 
 def weekly_downloads(start_date):
-    df = get_data_frame_from_raw_sql(
+    df = big_query.get_data_frame_from_raw_sql(
         f"""
         SELECT
             date_trunc(date, WEEK) as date,
