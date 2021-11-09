@@ -37,8 +37,8 @@ def get_data_frame_from_raw_sql(_connector) -> pd.DataFrame:
     return _connector.query(query).to_dataframe()
 
 big_query_connector = get_connector()
-get_data_frame_from_raw_sql(big_query_connector, "SELECT 'foo'")
-# get_data_frame_from_raw_sql(big_query_connector)
+# get_data_frame_from_raw_sql(big_query_connector, "SELECT 'foo'")
+get_data_frame_from_raw_sql(big_query_connector)
 
 ################## Code from Arnaud ##################
 
