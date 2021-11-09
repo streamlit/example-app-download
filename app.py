@@ -43,7 +43,7 @@ get_data_frame_from_raw_sql(big_query_connector, "SELECT 'foo'")
 
 
 def monthly_downloads(start_date):
-    df = get_data_frame_from_raw_sql(
+    df = get_data_frame_from_raw_sql(big_query_connector,
         f"""
         SELECT
             date_trunc(date, MONTH) as date,
@@ -64,7 +64,7 @@ def monthly_downloads(start_date):
 
 
 def weekly_downloads(start_date):
-    df = get_data_frame_from_raw_sql(
+    df = get_data_frame_from_raw_sql(big_query_connector,
         f"""
         SELECT
             date_trunc(date, WEEK) as date,
