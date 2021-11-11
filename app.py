@@ -5,6 +5,8 @@ import pandas as pd
 import altair as alt
 from datetime import datetime, timedelta, date
 
+st.set_page_config(page_icon="📥", page_title="Download App")
+
 # from data_sources import big_query
 # from dashboard_utils import gui
 #import gui
