@@ -1,17 +1,13 @@
-import streamlit as st
-from google.oauth2 import service_account
-from google.cloud import bigquery
-import pandas as pd
+from datetime import date, datetime
+
 import altair as alt
-from datetime import datetime, timedelta, date
+import pandas as pd
+import streamlit as st
+from google.cloud import bigquery
+from google.oauth2.service_account import Credentials
 
 st.set_page_config(page_icon="📥", page_title="Download App")
 
-# from data_sources import big_query
-# from dashboard_utils import gui
-#import gui
-
-################## Code from Arnaud ##################
 
 def icon(emoji: str):
     """Shows an emoji as a Notion-style page icon."""
@@ -20,32 +16,28 @@ def icon(emoji: str):
         unsafe_allow_html=True,
     )
 
-################## Code from Arnaud ##################
-
-import streamlit as st
-from google.cloud import bigquery
-from google.oauth2.service_account import Credentials
 
 # Share the connector across all users connected to the app
 @st.experimental_singleton()
 def get_connector():
-    """ Create a connector using credentials filled in Streamlit secrets """
+    """Create a connector using credentials filled in Streamlit secrets"""
     credentials = Credentials.from_service_account_info(st.secrets["bigquery"])
     connector = bigquery.Client(credentials=credentials)
     return connector
 
-@st.experimental_memo(ttl=24*60*60)
+
+@st.experimental_memo(ttl=24 * 60 * 60)
 def get_data_frame_from_raw_sql(_connector, query: str) -> pd.DataFrame:
     return _connector.query(query).to_dataframe()
+
 
 big_query_connector = get_connector()
 get_data_frame_from_raw_sql(big_query_connector, "SELECT 'foo'")
 
-################## Code from Arnaud ##################
-
 
 def monthly_downloads(start_date):
-    df = get_data_frame_from_raw_sql(big_query_connector,
+    df = get_data_frame_from_raw_sql(
+        big_query_connector,
         f"""
         SELECT
             date_trunc(date, MONTH) as date,
@@ -56,7 +48,7 @@ def monthly_downloads(start_date):
             AND project NOT IN ('shiny')
         GROUP BY 1,2
         ORDER BY 1,2 ASC
-        """
+        """,
     )
 
     # Percentage difference (between 0-1) of downloads of current vs previous month
@@ -66,7 +58,8 @@ def monthly_downloads(start_date):
 
 
 def weekly_downloads(start_date):
-    df = get_data_frame_from_raw_sql(big_query_connector,
+    df = get_data_frame_from_raw_sql(
+        big_query_connector,
         f"""
         SELECT
             date_trunc(date, WEEK) as date,
@@ -77,7 +70,7 @@ def weekly_downloads(start_date):
             AND project NOT IN ('shiny')
         GROUP BY 1,2
         ORDER BY 1,2 ASC
-        """
+        """,
     )
 
     # Percentage difference (between 0-1) of downloads of current vs previous month
@@ -201,7 +194,7 @@ def main():
     streamlit_data_monthly = df_monthly[df_monthly["project"] == "streamlit"]
     streamlit_data_weekly = df_weekly[df_weekly["project"] == "streamlit"]
 
-    package_names = df_monthly["project"].drop_duplicates()
+    package_names = df_monthly["project"].unique()
 
     if time_frame == "weekly":
         selected_data_streamlit = streamlit_data_weekly
@@ -230,8 +223,10 @@ def main():
     select_packages = st.multiselect(
         "Select Python packages to compare",
         package_names,
-        # default=["numpy", "pandas"],
-        default=["streamlit", "dash", "panel", "voila"],
+        default=[
+            "streamlit",
+            "torch",
+        ],
         help=instructions,
     )
 
@@ -247,15 +242,9 @@ def main():
     st.altair_chart(plot_all_downloads(filtered_df), use_container_width=True)
 
 
-# gui.icon("⬇️")
 st.title("Downloads")
 st.write(
     "Metrics on how often Streamlit is being downloaded from PyPI (Python's main "
     "package repository, i.e. where `pip install streamlit` downloads the package from)."
 )
 main()
-
-# if __name__ == "__main__":
-#     st.set_page_config(page_title="Python Downloads Tracker", page_icon="📈")
-#     st.title("📈 Python Downloads Tracker")
-#     main()
