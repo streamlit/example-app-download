@@ -4,6 +4,4 @@
 
 A simple download metrics app where you can compare Streamlit's downloads to other Python frameworks'! 🎈
 
-<img src="https://user-images.githubusercontent.com/27242399/140935651-867cac90-0962-4bb1-88a1-0c12b4ac657c.png" width="500"/>
-
-
+<img src="https://user-images.githubusercontent.com/27242399/157719856-49d454bb-2e0b-4c4f-9eda-3bd29343847c.png" width="500"/>
