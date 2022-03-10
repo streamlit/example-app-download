@@ -224,8 +224,7 @@ def main():
         "Select Python packages to compare",
         package_names,
         default=[
-            "streamlit",
-            "torch",
+            "pandas",
             "keras",
         ],
         help=instructions,
