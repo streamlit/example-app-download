@@ -226,6 +226,7 @@ def main():
         default=[
             "streamlit",
             "torch",
+            "keras",
         ],
         help=instructions,
     )
