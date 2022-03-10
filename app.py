@@ -230,8 +230,8 @@ def main():
     select_packages = st.multiselect(
         "Select Python packages to compare",
         package_names,
-        default=["numpy", "pandas"],
-        # default=["streamlit", "dash", "panel", "voila"],
+        # default=["numpy", "pandas"],
+        default=["streamlit", "dash", "panel", "voila"],
         help=instructions,
     )
 
