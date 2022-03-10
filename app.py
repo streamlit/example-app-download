@@ -45,7 +45,7 @@ def monthly_downloads(start_date):
             SUM(downloads) as downloads
         FROM streamlit.streamlit.pypi_downloads
         WHERE date >= '{start_date}'
-            AND project NOT IN ('shiny', 'panel')
+            AND project NOT IN ('shiny', 'panel', 'voila', 'jupiter', 'pywebio', 'gradio', 'dash')
         GROUP BY 1,2
         ORDER BY 1,2 ASC
         """,
@@ -67,7 +67,7 @@ def weekly_downloads(start_date):
             SUM(downloads) as downloads
         FROM streamlit.streamlit.pypi_downloads
         WHERE date >= '{start_date}'
-            AND project NOT IN ('shiny', 'panel')
+            AND project NOT IN ('shiny', 'panel', 'voila', 'jupiter', 'pywebio', 'gradio', 'dash')
         GROUP BY 1,2
         ORDER BY 1,2 ASC
         """,
