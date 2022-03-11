@@ -2,6 +2,6 @@
 
 # 📥 Download App
 
-A simple download metrics app where you can compare Streamlit's downloads to other Python frameworks'! 🎈
+A simple download metrics app where you can compare Pandas's downloads to other popular Python libraries'!
 
-<img src="https://user-images.githubusercontent.com/27242399/157719856-49d454bb-2e0b-4c4f-9eda-3bd29343847c.png" width="500"/>
+<img src="https://user-images.githubusercontent.com/27242399/157869053-a6363c2b-1849-426d-9547-6cd10d43a6f6.png" width="500"/>
