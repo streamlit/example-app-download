@@ -72,7 +72,6 @@ def weekly_downloads(start_date):
         ORDER BY 1,2 ASC
         """,
     )
-
     # Percentage difference (between 0-1) of downloads of current vs previous month
     df["delta"] = (df.groupby(["project"])["downloads"].pct_change()).fillna(0)
 
@@ -191,8 +190,8 @@ def main():
     df_monthly = monthly_downloads(start_date)
     df_weekly = weekly_downloads(start_date)
 
-    streamlit_data_monthly = df_monthly[df_monthly["project"] == "streamlit"]
-    streamlit_data_weekly = df_weekly[df_weekly["project"] == "streamlit"]
+    streamlit_data_monthly = df_monthly[df_monthly["project"] == "pandas"]
+    streamlit_data_weekly = df_weekly[df_weekly["project"] == "pandas"]
 
     package_names = df_monthly["project"].unique()
 
@@ -203,7 +202,7 @@ def main():
         selected_data_streamlit = streamlit_data_monthly
         selected_data_all = df_monthly
 
-    ## STREAMLIT DOWNLOADS
+    ## PANDAS DOWNLOADS
 
     st.header("Streamlit downloads")
 
