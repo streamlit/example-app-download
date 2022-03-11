@@ -45,7 +45,7 @@ def monthly_downloads(start_date):
             SUM(downloads) as downloads
         FROM streamlit.streamlit.pypi_downloads
         WHERE date >= '{start_date}'
-            AND project NOT IN ('shiny', 'panel', 'voila', 'jupyter', 'pywebio', 'gradio', 'dash')
+            AND project IN ('pandas', 'keras', 'torch', 'tensorflow', 'numpy', 'sci-kit learn')
         GROUP BY 1,2
         ORDER BY 1,2 ASC
         """,
@@ -67,7 +67,7 @@ def weekly_downloads(start_date):
             SUM(downloads) as downloads
         FROM streamlit.streamlit.pypi_downloads
         WHERE date >= '{start_date}'
-            AND project NOT IN ('shiny', 'panel', 'voila', 'jupiter', 'pywebio', 'gradio', 'dash')
+            AND project IN ('pandas', 'keras', 'torch', 'tensorflow', 'numpy', 'sci-kit learn')
         GROUP BY 1,2
         ORDER BY 1,2 ASC
         """,
@@ -127,7 +127,7 @@ def plot_all_downloads(
     return lines & bars
 
 
-def plot_streamlit_downloads(source, x="date", y="downloads"):
+def pandasamlit_downloads(source, x="date", y="downloads"):
     # Create a selection that chooses the nearest point & selects based on x-value
     hover = alt.selection_single(
         fields=[x],
@@ -168,7 +168,7 @@ def plot_streamlit_downloads(source, x="date", y="downloads"):
 def main():
 
     # Note that page title/favicon are set in the __main__ clause below,
-    # so they can also be set through the mega multipage app (see ../streamlit_app.py).
+    # so they can also be set through the mega multipage app (see ../pandas_app.py).
 
     col1, col2 = st.columns(2)
 
@@ -190,24 +190,24 @@ def main():
     df_monthly = monthly_downloads(start_date)
     df_weekly = weekly_downloads(start_date)
 
-    streamlit_data_monthly = df_monthly[df_monthly["project"] == "pandas"]
-    streamlit_data_weekly = df_weekly[df_weekly["project"] == "pandas"]
+    pandas_data_monthly = df_monthly[df_monthly["project"] == "pandas"]
+    pandas_data_weekly = df_weekly[df_weekly["project"] == "pandas"]
 
     package_names = df_monthly["project"].unique()
 
     if time_frame == "weekly":
-        selected_data_streamlit = streamlit_data_weekly
+        selected_data_streamlit = pandas_data_weekly
         selected_data_all = df_weekly
     else:
-        selected_data_streamlit = streamlit_data_monthly
+        selected_data_streamlit = pandas_data_monthly
         selected_data_all = df_monthly
 
     ## PANDAS DOWNLOADS
 
-    st.header("Streamlit downloads")
+    st.header("Pandas downloads")
 
     st.altair_chart(
-        plot_streamlit_downloads(selected_data_streamlit), use_container_width=True
+        pandasamlit_downloads(selected_data_streamlit), use_container_width=True
     )
 
     # OTHER DOWNLOADS
@@ -243,7 +243,7 @@ def main():
 
 st.title("Downloads")
 st.write(
-    "Metrics on how often Streamlit is being downloaded from PyPI (Python's main "
-    "package repository, i.e. where `pip install streamlit` downloads the package from)."
+    "Metrics on how often Pandas is being downloaded from PyPI (Python's main "
+    "package repository, i.e. where `pip install pandas` downloads the package from)."
 )
 main()
