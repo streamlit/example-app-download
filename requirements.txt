@@ -5,4 +5,4 @@ google-cloud
 google-cloud-bigquery
 pandas
 datetime
-
+click==8
