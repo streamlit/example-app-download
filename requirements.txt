@@ -1,5 +1,5 @@
 streamlit
-db-types
+db-dtypes
 google-auth
 google-cloud-storage
 google-cloud
