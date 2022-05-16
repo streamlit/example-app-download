@@ -53,6 +53,8 @@ def monthly_downloads(start_date):
 
     # Percentage difference (between 0-1) of downloads of current vs previous month
     df["delta"] = (df.groupby(["project"])["downloads"].pct_change()).fillna(0)
+    # BigQuery returns the date column as type dbdate, which is not supported by Altair/Vegalite
+    df["date"] = df["date"].astype("datetime64")
 
     return df
 
@@ -74,6 +76,8 @@ def weekly_downloads(start_date):
     )
     # Percentage difference (between 0-1) of downloads of current vs previous month
     df["delta"] = (df.groupby(["project"])["downloads"].pct_change()).fillna(0)
+    # BigQuery returns the date column as type dbdate, which is not supported by Altair/Vegalite
+    df["date"] = df["date"].astype("datetime64")
 
     return df
 
