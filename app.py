@@ -71,6 +71,7 @@ def weekly_downloads(start_date):
         WHERE date >= '{start_date}'
             AND project IN ('pandas', 'keras', 'torch', 'tensorflow', 'numpy', 'sci-kit learn')
         GROUP BY 1,2
+        HAVING date_diff(CURRENT_DATE(), max(date_trunc(date, WEEK)), DAY) >=7
         ORDER BY 1,2 ASC
         """,
     )
